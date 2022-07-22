@@ -1,0 +1,19 @@
+# Virtualenv related
+bin/
+include/
+pip-selfcheck.json
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# pyenv
+.python-version
+
+# Environments
+.venv
+venv/
+
+# pycharm
+.idea/
