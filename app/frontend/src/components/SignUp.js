@@ -67,7 +67,7 @@ export default function SignUp() {
     if (token) {
       navigate("/dashboard");
     }
-  }, []);
+  }, [navigate]);
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">

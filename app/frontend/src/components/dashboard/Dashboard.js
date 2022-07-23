@@ -128,7 +128,7 @@ function DashboardContent() {
           });
       }, 10000);
     }
-  }, []);
+  }, [navigate]);
 
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
