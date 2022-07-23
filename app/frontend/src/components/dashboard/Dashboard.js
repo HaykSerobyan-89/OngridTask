@@ -23,6 +23,7 @@ import Deposits from "./Deposits";
 import Orders from "./Orders";
 import { useNavigate } from "react-router-dom";
 import { LogoutOutlined } from "@mui/icons-material";
+import axios from "axios";
 
 function Copyright(props) {
   return (
@@ -97,6 +98,35 @@ function DashboardContent() {
     const token = JSON.parse(localStorage.getItem("token"));
     if (!token) {
       navigate("/");
+    } else {
+     let id = setInterval(function () {
+        const token = JSON.parse(localStorage.getItem("token"));
+        axios
+          .post(`${process.env.REACT_APP_BACK_END_URL}/api/token/refresh/`, {
+            refresh: token?.refresh,
+          })
+          .then((res) => {
+            localStorage.setItem(
+              "token",
+              JSON.stringify({
+                access: res.data.access,
+                refresh: token.refresh,
+              })
+            );
+          })
+          .catch((error) => {
+            if (error.response) {
+              // if refresh token is expired - automatically logOut
+              if (
+                error.response.data.detail === "Token is invalid or expired"
+              ) {
+                navigate("/")
+                clearInterval(id)
+                localStorage.removeItem("token");
+              }
+            } 
+          });
+      }, 10000);
     }
   }, []);
 
