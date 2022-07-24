@@ -11,3 +11,5 @@ RUN pip install -r requirements.txt
 COPY ./app /app
 
 WORKDIR /app
+
+CMD ["python3", "manage.py", "collectstatic"]
