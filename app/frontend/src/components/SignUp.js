@@ -38,7 +38,7 @@ export default function SignUp() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     axios
-      .post(`${process.env.REACT_APP_BACK_END_URL}/register/`, {
+      .post(`${process.env.REACT_APP_BACK_END_URL}/register/users/`, {
         email: data.get("email"),
         password: data.get("password"),
       })
@@ -49,8 +49,10 @@ export default function SignUp() {
       .catch((error) => {
         if (error.response) {
           console.log("req", error.response);
-          if (error.response.data.email) {
-            alert(error.response.data.email[0]);
+          if (error.response.data) {
+            for (const [key, value] of Object.entries(error.response.data)) {
+              alert(`Wrong ${key}: ${value}`);
+            }
           }
         } else if (error.request) {
           console.log("res", error.request);
