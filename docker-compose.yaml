@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  backend:
+    volumes:
+      - static:/static
+    env_file:
+      - app/app/.env
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    command: gunicorn app.wsgi:application --bind 0.0.0.0
+
+  frontend:
+    restart: always
+    build:
+      context: ./app/frontend/
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    depends_on:
+      - backend
+    command: yarn start
+
+volumes:
+  static:

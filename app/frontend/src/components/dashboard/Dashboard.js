@@ -99,7 +99,7 @@ function DashboardContent() {
     if (!token) {
       navigate("/");
     } else {
-     let id = setInterval(function () {
+      setInterval(function () {
         const token = JSON.parse(localStorage.getItem("token"));
         axios
           .post(`${process.env.REACT_APP_BACK_END_URL}/api/token/refresh/`, {
@@ -115,18 +115,12 @@ function DashboardContent() {
             );
           })
           .catch((error) => {
-            if (error.response) {
-              // if refresh token is expired - automatically logOut
-              if (
-                error.response.data.detail === "Token is invalid or expired"
-              ) {
-                navigate("/")
-                clearInterval(id)
-                localStorage.removeItem("token");
-              }
-            } 
+            // if refresh token is expired - automatically logOut
+            if (error.response.data.detail === "Token is invalid or expired") {
+              logOut();
+            }
           });
-      }, 10000);
+      }, 40000);
     }
   }, [navigate]);
 
@@ -137,8 +131,9 @@ function DashboardContent() {
 
   const logOut = () => {
     localStorage.removeItem("token");
-    navigate("/");
+    window.location.reload();
   };
+
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
