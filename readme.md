@@ -15,6 +15,7 @@
 ## *Installation*
 ### ***Run With Docker Container***
 `docker-compose up --build -d`
+___
 ### *Run from terminal*
 #### *To run Django Backend App*
 ```commandline
@@ -24,8 +25,18 @@ source venv/bin/activate
 cd app && python3 manage.py runserver
 ```
 
-Open new terminal to run React Frontend App
+#### *Open new terminal to run React Frontend App*
 ```commandline
-yarn install
+cd app/frontend && yarn install
 yarn start
 ```
+#### *Django REST API Roots*
+
+> + Create user     
+>   + http://localhost:8000/register/users/
+> + Get user tokens      
+>   + http://localhost:8000/api/token/
+> + Refresh user tokens     
+>   + http://localhost:8000/api/token/refresh/
+
+
