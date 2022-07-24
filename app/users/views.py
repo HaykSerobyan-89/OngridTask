@@ -6,11 +6,10 @@ from .models import User
 
 class UserSerializer(serializers.ModelSerializer):
     created = serializers.DateTimeField(read_only=True, format=DATETIME_FORMAT, input_formats=None)
-    password = serializers.CharField(min_length=8, write_only=True)
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'password', 'created')
+        fields = ('id', 'email', 'created')
 
 
 class UsersViewSet(viewsets.ModelViewSet):

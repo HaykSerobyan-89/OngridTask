@@ -5,7 +5,7 @@ from django.db import models
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password, **kwargs):
+    def create_user(self, email, password=None, **kwargs):
         if not email:
             raise ValueError("Users must have an email address")
         email = self.normalize_email(email)
@@ -31,7 +31,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True, editable=False)
     email = models.EmailField(max_length=255, unique=True)
     created = models.DateTimeField(auto_now_add=True, blank=True)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
     objects = UserManager()
